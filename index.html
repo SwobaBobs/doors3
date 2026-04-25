@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Your Door</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      letter-spacing: 1px;
+    }
+
+    .doors-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .door {
+      width: 220px;
+      height: 320px;
+      background: linear-gradient(145deg, #8B4513, #A0522D);
+      border: 8px solid #5D2906;
+      border-radius: 12px 12px 0 0;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .door::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      width: 90%;
+      height: 70%;
+      background: linear-gradient(145deg, #A0522D, #8B4513);
+      border: 4px solid #5D2906;
+      border-radius: 4px;
+    }
+
+    .door::after {
+      content: '';
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      background: #FFD700;
+      border: 3px solid #B8860B;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .door:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+      background: linear-gradient(145deg, #A0522D, #CD853F);
+    }
+
+    .door:active {
+      transform: scale(0.98);
+    }
+
+    .door-label {
+      position: relative;
+      z-index: 2;
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #FFF8DC;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      background: rgba(93, 41, 6, 0.7);
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 2px solid #FFD700;
+    }
+
+    .door.left:hover { background: linear-gradient(145deg, #2E8B57, #3CB371); }
+    .door.middle:hover { background: linear-gradient(145deg, #4169E1, #6495ED); }
+    .door.right:hover { background: linear-gradient(145deg, #8B0000, #DC143C); }
+
+    .instructions {
+      margin-top: 40px;
+      max-width: 600px;
+      padding: 15px 25px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .doors-container {
+        flex-direction: column;
+        gap: 25px;
+      }
+      .door {
+        width: 200px;
+        height: 290px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🚪 Choose Your Door 🚪</h1>
+  
+  <div class="doors-container">
+    <div class="door left" onclick="openLink('https://swobabobs.github.io/gh/')">
+      <div class="door-label">Left Door</div>
+    </div>
+    
+    <div class="door middle" onclick="openLink('https://swobabobs.github.io/hi/')">
+      <div class="door-label">Middle Door</div>
+    </div>
+    
+    <div class="door right" onclick="openLink('https://swobabobs.github.io/ij/')">
+      <div class="door-label">Right Door</div>
+    </div>
+  </div>
+  
+  <div class="instructions">
+    <p>Click on any door to open your destination in a new tab!<br>
+    Each door leads to a different adventure, but everything has the same destination they share. Which will you choose?</p>
+  </div>
+
+  <script>
+    function openLink(url) {
+      // Open in new tab with security best practices
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      
+      // Fallback if popup is blocked
+      if (!newWindow) {
+        alert('Popup blocked! Please allow popups for this site, or right-click a door and select "Open in new tab".');
+      }
+    }
+
+    // Add keyboard accessibility
+    document.querySelectorAll('.door').forEach((door, index) => {
+      door.setAttribute('tabindex', '0');
+      door.setAttribute('role', 'button');
+      door.setAttribute('aria-label', `Open door ${index + 1}`);
+      
+      door.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          door.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
